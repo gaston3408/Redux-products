@@ -5,7 +5,7 @@ import PropTypes from 'prop-types' ;
 const CustomModal = ( {
     isActive, children, title, handleClose,
 } ) => (
-    <Modal show={ isActive } onHide={ handleClose }>
+    <Modal show={ isActive } className="text-center" onHide={ handleClose }>
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter"><h3>{ title }</h3></Modal.Title>
         </Modal.Header>
