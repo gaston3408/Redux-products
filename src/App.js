@@ -44,8 +44,8 @@ const App = () => {
         Swal.fire("El producto no puede estar vacio")
         return
       }
-      if( formValues.price === 0 ) {
-        Swal.fire("El precio no puede ser 0")
+      if( formValues.price <= 0 ) {
+        Swal.fire("El precio no puede ser $0")
         return
       }
       if (products.products.length >= 10){
