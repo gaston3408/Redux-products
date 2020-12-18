@@ -17,12 +17,19 @@ export default function (state= initialState, action) {
             return {
                 ...state,
                 loading: true,
+                error:false
             }
         case ADD_PRODUCT_OK:
             return {
                 ...state,
-                products: action.payload,
-                loading: false
+                products: [ ...state.products, action.payload ],
+                loading: false,
+                error:false
+            }
+        case ADD_PRODUCT:
+            return {
+                 ...state,
+                error: true,
             }
         default:
             return state;

@@ -1,21 +1,26 @@
 import {
     ADD_PRODUCT,
-    ADD_PRODUCT_OK
+    ADD_PRODUCT_OK,
+    ADD_PRODUCT_ERROR
 } from '../types/index';
+//firebase
+import {firebase} from '../../firebase'
 
 // create products
 export function addNewProductAction( product ) {
-    return (dispatch) => {
+    return async(dispatch) => {
         dispatch( addNewProduct() );
+        try {
+            const db = firebase.firestore()
+            const data = await db.collection('products').add(product)
+            product.id = data.id
+            dispatch( addNewProductOk( product )) 
+        } catch (error) {
+            console.log(error)
+            dispatch( addNewProductError()) 
+        }
 
-        let products = []
-        if( localStorage.getItem( "products" )) {
-            products = JSON.parse( localStorage.getItem( "products" ) );
-        }        
-        product.formValues.id = products.length + 1;
-        products.push( product )
-        localStorage.setItem( "products", JSON.stringify( products ) );
-        dispatch( addNewProductOk( products ))
+        
     }
 }
 
@@ -25,4 +30,7 @@ const addNewProduct = () => ({
 const addNewProductOk = (payload) => ({
     type: ADD_PRODUCT_OK,
     payload: payload,
+})
+const addNewProductError = () => ({
+    type: ADD_PRODUCT_ERROR,
 })

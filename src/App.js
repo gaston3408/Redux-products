@@ -10,7 +10,6 @@ import { addNewProductAction } from './redux/actions/productActions'
 
 
 const initialFormValues = {
-  id: null,
   name: "",
   price: 0
 }
@@ -21,7 +20,8 @@ const App = () => {
   const [ isOpened, setIsOpened ] = useState( false ) ;
   const [ action, setAction ] = useState("") ;
   const [ formValues, setFormValues ] = useState( initialFormValues )
-
+  const products = useSelector(state => state.products.products)
+  
   const handleClose = () =>{
       setIsOpened( false );
   }
@@ -32,7 +32,12 @@ const App = () => {
   }
   const handleSubmit = (e) =>{
       e.preventDefault();
-      dispatch( addNewProductAction({formValues}) )
+      if( formValues.price === 0 ) {
+        alert("El precio no puede ser 0")
+        return
+      }
+      dispatch( addNewProductAction(formValues) )
+      setIsOpened( false );
   }
 
   const handleChange = (e) => {
